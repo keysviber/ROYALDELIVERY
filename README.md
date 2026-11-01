@@ -1,17 +1,19 @@
-# royaldelivery
+# Royal Delivery
 
-A new Flutter project.
+A bike-first Flutter courier app UI with an ivory, charcoal, and lime visual identity, responsive map dashboard, delivery workflow, shift booking, earnings, and rider account screens.
 
-## Getting Started
+Run with a compatible Flutter SDK (Dart ^3.13.5, as configured in pubspec.yaml):
 
-This project is a starting point for a Flutter application.
+```sh
+flutter pub get
+flutter run
+```
 
-A few resources to get you started if this is your first Flutter project:
+Checks:
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+```sh
+flutter analyze
+flutter test
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+This is an interactive local prototype. The Bulawayo map is illustrated, offers and earnings are sample data, and shift reservations only last during the app session. GPS, routing, dispatch, authentication, support contacts, persistent storage, and payouts are not connected. Completed demo deliveries update the in-session balance.

@@ -1,30 +1,47 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:royaldelivery/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
+  testWidgets('Rider completes a delivery and earnings update', (tester) async {
+    tester.view.physicalSize = const Size(1200, 1000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
     await tester.pumpWidget(const MyApp());
+    await tester.tap(find.text('Let’s go online'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Accept delivery'));
+    await tester.pumpAndSettle();
+    expect(find.text('City Kitchen'), findsOneWidget);
+    await tester.tap(find.text('Confirm pickup →'));
+    await tester.pumpAndSettle();
+    expect(find.text('Delivery for Tariro'), findsOneWidget);
+    await tester.tap(find.text('Complete delivery'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Confirm handover'));
+    await tester.pumpAndSettle();
+    expect(find.text('\$29.00'), findsWidgets);
+    expect(find.text('Accept delivery'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  testWidgets('Phone layout and shift booking work', (tester) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    await tester.pumpWidget(const MyApp());
+    expect(find.text('Ready to roll?'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+    await tester.tap(find.text('Schedule'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Book this shift').first);
+    await tester.pumpAndSettle();
+    expect(find.text('Cancel booked shift'), findsOneWidget);
+    await tester.tap(find.text('Cancel booked shift'));
+    await tester.pumpAndSettle();
+    expect(find.text('Book this shift'), findsNWidgets(2));
+    expect(tester.takeException(), isNull);
   });
 }
